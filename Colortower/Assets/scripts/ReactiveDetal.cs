@@ -7,7 +7,6 @@ public class ReactiveDetal : MonoBehaviour
     [SerializeField] private float duration = 0.3f;
     [SerializeField] private Transform checkerUpTransform;
     [SerializeField] private Transform checkerDownTransform;
-    [SerializeField] private Transform checkerRightTransform;
     private ChastController allLine;
     private bool inAnimation = false;
     private int _id;
@@ -17,7 +16,14 @@ public class ReactiveDetal : MonoBehaviour
     {
         allLine = transform.parent.GetComponent<ChastController>();
     }
-    int id { get { return _id; } }
+    public int id { get { return _id; } }
+    public bool inAnim
+    {
+        set
+        {
+            inAnimation = value;
+        }
+    }
     public void setId(int id, Material mat)
     {
         _id = id;
@@ -28,7 +34,30 @@ public class ReactiveDetal : MonoBehaviour
     {
 
     }
-
+    private void OnMouseDown()
+    {
+        if(!inAnimation)
+            if(!Physics.Linecast(transform.position,checkerUpTransform.position))
+            {
+                ChastController chast = allLine.GetUpperParent().GetComponent<ChastController>();
+                if (!chast.inAnim)
+                {
+                    StartCoroutine(Move(0.6f));
+                    transform.parent = chast.transform;
+                    allLine = chast;
+                }
+                
+            }else if(!Physics.Linecast(transform.position, checkerDownTransform.position))
+            {
+                ChastController chast = allLine.GetLowerParent().GetComponent<ChastController>();
+                if (!chast.inAnim)
+                {
+                    StartCoroutine(Move(-0.6f));
+                    transform.parent = chast.transform;
+                    allLine = chast;
+                }
+            }
+    }
     private void OnMouseDrag()
     {
         if (Input.GetTouch(0).phase == TouchPhase.Moved)
@@ -36,33 +65,7 @@ public class ReactiveDetal : MonoBehaviour
     }
     private void OnMouseUp()
     {
-        //Debug.Log(deltaPos.x);
-        //Debug.Log(deltaPos.y);
-        if(Mathf.Abs(deltaPos.y)/3>Mathf.Abs(deltaPos.x))
-        {
-            if (deltaPos.y < 0)
-            {
-                if (!Physics.Linecast(transform.position, checkerDownTransform.position))
-                    if (!inAnimation)
-                    { 
-                        StartCoroutine(Move(-0.6f));
-                        //transform.parent = allLine.GetLowParent();
-                        transform.parent = allLine.GetLowerParent();
-                        allLine = transform.parent.GetComponent<ChastController>(); 
-                    }
-            }
-            else
-            {
-                if (!Physics.Linecast(transform.position, checkerUpTransform.position))
-                    if (!inAnimation)
-                    {
-                        StartCoroutine(Move(0.6f));
-                        //transform.parent = allLine.GetUpParent();
-                        transform.parent = allLine.GetUpperParent();
-                        allLine = transform.parent.GetComponent<ChastController>();
-                    }
-            }
-        }else if(Mathf.Abs(deltaPos.x) / 3 > Mathf.Abs(deltaPos.y))
+        if(Mathf.Abs(deltaPos.x) / 3 > Mathf.Abs(deltaPos.y))
         {
             if (deltaPos.x < 0)
                 allLine.RotateLeft();

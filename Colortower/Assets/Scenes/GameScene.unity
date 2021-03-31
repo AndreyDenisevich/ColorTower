@@ -433,6 +433,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 448261785}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &607821737
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 607821738}
+  m_Layer: 0
+  m_Name: checker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &607821738
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607821737}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1362180318}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &698466668
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,6 +969,7 @@ MonoBehaviour:
   piecePrefab: {fileID: 7447438935620338703, guid: 9f30e68e5ca9fe04f9f439a52a887170,
     type: 3}
   Tower: {fileID: 1362180318}
+  checker: {fileID: 0}
 --- !u!4 &1188311533
 Transform:
   m_ObjectHideFlags: 0
@@ -1073,6 +1104,7 @@ Transform:
   - {fileID: 1830585561}
   - {fileID: 318353894}
   - {fileID: 698466669}
+  - {fileID: 607821738}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

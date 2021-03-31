@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private ChastController chastPrefab;
     [SerializeField] private ReactiveDetal piecePrefab;
     [SerializeField] private Transform Tower;
+    [SerializeField] private Transform checker;
     void Start()
     {
         int[] counts = { 6,7,7,7,7,7,7,7,1};
