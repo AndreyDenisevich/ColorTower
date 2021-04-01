@@ -8,19 +8,26 @@ public class GameController : MonoBehaviour
     [SerializeField] private Material[] pieceMaterials;
     [SerializeField] private ChastController chastPrefab;
     [SerializeField] private ReactiveDetal piecePrefab;
-    [SerializeField] private Transform Tower;
+
+    private Transform Tower;
+    [SerializeField] private GameObject TowerPrefab;
+
     [SerializeField] private Transform[] checkers;
+    private int cols = 8;
     private int rows = 7;
     void Start()
     {
+        GameObject tow = Instantiate(TowerPrefab) as GameObject;
+        tow.transform.position = transform.position;
+        Tower = tow.transform;
         int[] counts = { 6,7, 7, 7, 7, 7, 7, 7, 1 };
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < rows; i++)
         {
             GameObject chast = Instantiate(chastPrefab.gameObject) as GameObject;
-            chast.transform.position = transform.position;
+            chast.transform.position = new Vector3(transform.position.x, transform.position.y - 1.8f, transform.position.z);
             chast.transform.Translate(0, i * 0.6f, 0);
             chast.transform.parent = Tower;
-            for (int j = 0; j < 8; j++)
+            for (int j = 0; j < cols; j++)
             {
                 int id;
                 do
