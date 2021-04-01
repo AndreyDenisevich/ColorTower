@@ -625,7 +625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tower: {fileID: 1362180318}
-  sens: 2
+  sens: 3
 --- !u!65 &890728319
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1229,7 +1229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tower: {fileID: 1362180318}
-  sens: 2
+  sens: 3
 --- !u!65 &1559230769
 BoxCollider:
   m_ObjectHideFlags: 0

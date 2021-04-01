@@ -9,7 +9,10 @@ public class ReactiveDetal : MonoBehaviour
     [SerializeField] private Transform checkerDownTransform;
     private ChastController allLine;
     private bool inAnimation = false;
+    private bool canMoveUp = false;
+    private bool canMoveDown = false;
     private int _id;
+    private float sens = 3f;
     private Vector2 deltaPos = new Vector2(0, 0);
     // Start is called before the first frame update
     void Start()
@@ -36,9 +39,42 @@ public class ReactiveDetal : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if(!inAnimation)
-            if(!Physics.Linecast(transform.position,checkerUpTransform.position))
+        if (!inAnimation)
+        {
+            if (!Physics.Linecast(transform.position, checkerUpTransform.position))
             {
+                canMoveUp = true;
+            }
+            if (!Physics.Linecast(transform.position, checkerDownTransform.position))
+            {
+                canMoveDown = true;
+            }
+        }
+
+    }
+    private void OnMouseDrag()
+    {
+        if (Input.GetTouch(0).phase == TouchPhase.Moved && !inAnimation)
+        {
+            canMoveDown = canMoveUp = false;
+            Vector2 delta = Input.GetTouch(0).deltaPosition;
+            float deltatime = Input.GetTouch(0).deltaTime;
+            if (delta.x > 2 || delta.x < -2)
+                allLine.transform.Rotate(0, -sens * delta.x * deltatime, 0);
+        }
+    }
+    private void OnMouseUp()
+    {
+        if (!inAnimation)
+        {
+            if (!canMoveUp && !canMoveDown)
+            {
+                float rotation = Mathf.RoundToInt(allLine.transform.rotation.eulerAngles.y / 45f) * 45f;
+                StartCoroutine(RotateAnim(rotation - allLine.transform.eulerAngles.y));
+            }
+            if (canMoveUp)
+            {
+                canMoveUp = canMoveDown = false;
                 ChastController chast = allLine.GetUpperParent().GetComponent<ChastController>();
                 if (!chast.inAnim)
                 {
@@ -46,9 +82,10 @@ public class ReactiveDetal : MonoBehaviour
                     transform.parent = chast.transform;
                     allLine = chast;
                 }
-                
-            }else if(!Physics.Linecast(transform.position, checkerDownTransform.position))
+            }
+            else if (canMoveDown)
             {
+                canMoveUp = canMoveDown = false;
                 ChastController chast = allLine.GetLowerParent().GetComponent<ChastController>();
                 if (!chast.inAnim)
                 {
@@ -57,22 +94,7 @@ public class ReactiveDetal : MonoBehaviour
                     allLine = chast;
                 }
             }
-    }
-    private void OnMouseDrag()
-    {
-        if (Input.GetTouch(0).phase == TouchPhase.Moved)
-            deltaPos += Input.GetTouch(0).deltaPosition;
-    }
-    private void OnMouseUp()
-    {
-        if(Mathf.Abs(deltaPos.x) / 3 > Mathf.Abs(deltaPos.y))
-        {
-            if (deltaPos.x < 0)
-                allLine.RotateLeft();
-            else allLine.RotateRight();
         }
-        deltaPos.x = 0;
-        deltaPos.y = 0;
     }
     private IEnumerator Move(float endposDelta)
     {
@@ -90,6 +112,37 @@ public class ReactiveDetal : MonoBehaviour
             yield return null;
         }
         transform.position = endPos;
+        inAnimation = false;
+    }
+
+    private IEnumerator RotateAnim(float deltaAngle)
+    {
+        inAnimation = true;
+        Component[] compnts = transform.GetComponentsInChildren<ReactiveDetal>();
+        foreach (ReactiveDetal piece in compnts)
+        {
+            piece.inAnim = true;
+        }
+        Vector3 startPos = allLine.transform.rotation.eulerAngles;
+        Vector3 endPos = allLine.transform.rotation.eulerAngles;
+        endPos.y += deltaAngle;
+        Quaternion rot = allLine.transform.rotation;
+        float progress = 0f;
+        float elapsedTime = 0f;
+        while (progress <= 1)
+        {
+            rot.eulerAngles = Vector3.Lerp(startPos, endPos, progress);
+            allLine.transform.rotation = rot;
+            elapsedTime += Time.unscaledDeltaTime;
+            progress = elapsedTime / duration;
+            yield return null;
+        }
+        rot.eulerAngles = endPos;
+        allLine.transform.rotation = rot;
+        foreach (ReactiveDetal piece in compnts)
+        {
+            piece.inAnim = false;
+        }
         inAnimation = false;
     }
 }
