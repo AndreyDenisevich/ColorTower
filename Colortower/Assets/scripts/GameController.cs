@@ -9,17 +9,18 @@ public class GameController : MonoBehaviour
     [SerializeField] private ChastController chastPrefab;
     [SerializeField] private ReactiveDetal piecePrefab;
     [SerializeField] private Transform Tower;
-    [SerializeField] private Transform checker;
+    [SerializeField] private Transform[] checkers;
+    private int rows = 7;
     void Start()
     {
-        int[] counts = { 6,7,7,7,7,7,7,7,1};
-        for (int i = 0;i<7;i++)
+        int[] counts = { 6,7, 7, 7, 7, 7, 7, 7, 1 };
+        for (int i = 0; i < 7; i++)
         {
             GameObject chast = Instantiate(chastPrefab.gameObject) as GameObject;
             chast.transform.position = transform.position;
             chast.transform.Translate(0, i * 0.6f, 0);
             chast.transform.parent = Tower;
-            for(int j=0; j<8; j++)
+            for (int j = 0; j < 8; j++)
             {
                 int id;
                 do
@@ -40,12 +41,38 @@ public class GameController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        if (CheckForWin())
+            Debug.Log("You Win");
     }
-    private void CheckForWin()
+    public bool CheckForWin()
     {
-
-    }
+        int id = 0, prevId;
+        bool line = true,win = false;
+        for (int i = 0; i < checkers.Length; i++)
+        {
+            for (int j = 0; j < rows; j++)
+            {
+                prevId = id;
+                Vector3 pos = checkers[i].position;
+                pos.y += j * 0.6f;
+                Collider[] cols = Physics.OverlapSphere(pos, 0.05f);
+                if (cols.Length == 0)
+                {
+                    id = 0;
+                }
+                else
+                { id = cols[0].GetComponent<ReactiveDetal>().id; }
+                if (prevId == 0 || id == 0 || id == prevId)
+                    line = true;
+                else { line = false; break; }
+            }
+            if (!line)
+            { win = false; break; }
+            else win = true;
+            id = 0;
+        }
+        return win;
+    } 
 }

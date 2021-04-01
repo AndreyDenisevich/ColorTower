@@ -5,15 +5,19 @@ using UnityEngine;
 public class ReactiveDetal : MonoBehaviour
 {
     [SerializeField] private float duration = 0.3f;
+
     [SerializeField] private Transform checkerUpTransform;
     [SerializeField] private Transform checkerDownTransform;
+
     private ChastController allLine;
+
     private bool inAnimation = false;
     private bool canMoveUp = false;
     private bool canMoveDown = false;
+
     private int _id;
+
     private float sens = 3f;
-    private Vector2 deltaPos = new Vector2(0, 0);
     // Start is called before the first frame update
     void Start()
     {
@@ -113,6 +117,7 @@ public class ReactiveDetal : MonoBehaviour
         }
         transform.position = endPos;
         inAnimation = false;
+       
     }
 
     private IEnumerator RotateAnim(float deltaAngle)
@@ -144,5 +149,6 @@ public class ReactiveDetal : MonoBehaviour
             piece.inAnim = false;
         }
         inAnimation = false;
+        
     }
 }
