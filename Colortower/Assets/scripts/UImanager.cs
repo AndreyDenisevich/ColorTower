@@ -14,6 +14,10 @@ public class UImanager : MonoBehaviour
 
     [SerializeField] private Animator panelModes;
     [SerializeField] private Animator btn_start;
+
+    [SerializeField] private Animator panelHelp;
+    [SerializeField] private Animator btnHelp;
+    [SerializeField] private Animator btnGoToMenu;
     void Start()
     {
         InGameUI.enabled = false;
@@ -30,6 +34,14 @@ public class UImanager : MonoBehaviour
         bool isHidden = panelModes.GetBool("isHidden");
         panelModes.SetBool("isHidden", !isHidden);
         btn_start.SetBool("isHidden", isHidden);
+    }
+    public void TogglePanelHelp()
+    {
+        panelHelp.enabled = true;
+        bool isHidden = panelHelp.GetBool("isHidden");
+        panelHelp.SetBool("isHidden", !isHidden);
+        btnHelp.SetBool("isHidden", isHidden);
+        btnGoToMenu.SetBool("isHidden", isHidden);
     }
     public void StartGame7x8()
     {
