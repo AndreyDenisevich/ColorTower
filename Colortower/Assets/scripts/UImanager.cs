@@ -49,6 +49,7 @@ public class UImanager : MonoBehaviour
         obj.transform.position = Vector3.zero;
         Menu.enabled = false;
         InGameUI.enabled = true;
+        obj.GetComponent<GameController>().SetGame(8, 7);
     }
     public void GoToMenu()
     {

@@ -15,16 +15,25 @@ public class GameController : MonoBehaviour
     [SerializeField] private Transform[] checkers;
     private int cols = 8;
     private int rows = 7;
-    void Start()
+    void initializeGame()
     {
         GameObject tow = Instantiate(TowerPrefab) as GameObject;
         tow.transform.position = transform.position;
         Tower = tow.transform;
-        int[] counts = { 6,7, 7, 7, 7, 7, 7, 7, 1 };
+        //int[] counts = { 6,7, 7, 7, 7, 7, 7, 7, 1 };
+        int[] counts = new int[cols + 1];
+        counts[cols] = 1;
+        counts[cols-1] = rows-1;
+        for(int i=0;i<cols-1;i++)
+        {
+            counts[i] = rows;
+        }
+        float deltaPos = (rows / 2) * 0.6f;
+        float deltaAngle = 360 / cols;
         for (int i = 0; i < rows; i++)
         {
             GameObject chast = Instantiate(chastPrefab.gameObject) as GameObject;
-            chast.transform.position = new Vector3(transform.position.x, transform.position.y - 1.8f, transform.position.z);
+            chast.transform.position = new Vector3(transform.position.x, transform.position.y - deltaPos, transform.position.z);
             chast.transform.Translate(0, i * 0.6f, 0);
             chast.transform.parent = Tower;
             for (int j = 0; j < cols; j++)
@@ -32,28 +41,28 @@ public class GameController : MonoBehaviour
                 int id;
                 do
                 {
-                    id = Random.Range(0, 9);
+                    id = Random.Range(0, cols+1);
                 } while (counts[id] == 0);
                 counts[id]--;
-                if (id != 8)
+                if (id != cols)
                 {
                     GameObject piece = Instantiate(piecePrefab.gameObject) as GameObject;
                     piece.transform.position = chast.transform.position;
-                    piece.transform.Rotate(45 * j, 0, 0);
+                    piece.transform.Rotate(deltaAngle * j, 0, 0);
                     piece.transform.parent = chast.transform;
-                    piece.GetComponent<ReactiveDetal>().setId(id, pieceMaterials[id]);
+                    piece.GetComponent<ReactiveDetal>().setId(id, pieceMaterials[id],this);
                 }
             }
         }
     }
-
-    // Update is called once per frame
-    void FixedUpdate()
+    public void SetGame(int col,int row)
     {
-        if (CheckForWin())
-            Debug.Log("You Win");
+        cols = col;
+        rows = row;
+        initializeGame();
     }
-    public bool CheckForWin()
+    // Update is called once per frame
+    public void CheckForWin()
     {
         int id = 0, prevId;
         bool line = true,win = false;
@@ -80,6 +89,9 @@ public class GameController : MonoBehaviour
             else win = true;
             id = 0;
         }
-        return win;
+        if(win)
+        {
+            Debug.Log("you win!");
+        }
     } 
 }

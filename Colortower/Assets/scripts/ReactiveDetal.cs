@@ -10,6 +10,7 @@ public class ReactiveDetal : MonoBehaviour
     [SerializeField] private Transform checkerDownTransform;
 
     private ChastController allLine;
+    private GameController gameController;
 
     private bool inAnimation = false;
     private bool canMoveUp = false;
@@ -31,10 +32,11 @@ public class ReactiveDetal : MonoBehaviour
             inAnimation = value;
         }
     }
-    public void setId(int id, Material mat)
+    public void setId(int id, Material mat,GameController game)
     {
         _id = id;
         GetComponent<MeshRenderer>().material = mat;
+        gameController = game;
     }
     // Update is called once per frame
     void Update()
@@ -117,7 +119,7 @@ public class ReactiveDetal : MonoBehaviour
         }
         transform.position = endPos;
         inAnimation = false;
-       
+        gameController.CheckForWin();
     }
 
     private IEnumerator RotateAnim(float deltaAngle)
@@ -149,6 +151,6 @@ public class ReactiveDetal : MonoBehaviour
             piece.inAnim = false;
         }
         inAnimation = false;
-        
+        gameController.CheckForWin();
     }
 }
