@@ -51,6 +51,22 @@ public class UImanager : MonoBehaviour
         InGameUI.enabled = true;
         obj.GetComponent<GameController>().SetGame(8, 7);
     }
+    public void StartGame5x8()
+    {
+        GameObject obj = Instantiate(gameController.gameObject) as GameObject;
+        obj.transform.position = Vector3.zero;
+        Menu.enabled = false;
+        InGameUI.enabled = true;
+        obj.GetComponent<GameController>().SetGame(8, 5);
+    }
+    public void StartGame3x8()
+    {
+        GameObject obj = Instantiate(gameController.gameObject) as GameObject;
+        obj.transform.position = Vector3.zero;
+        Menu.enabled = false;
+        InGameUI.enabled = true;
+        obj.GetComponent<GameController>().SetGame(8, 3);
+    }
     public void GoToMenu()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

@@ -5,7 +5,7 @@ using UnityEngine;
 public class RotationController : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] private Transform Tower;
+    private Transform Tower;
     [SerializeField] private float sens=1f;
     private bool inAnimation=false;
     private float duration = 0.2f;
@@ -13,7 +13,7 @@ public class RotationController : MonoBehaviour
     {
         
     }
-
+    public Transform tower { set { Tower = value; } }
     // Update is called once per frame
     void Update()
     {

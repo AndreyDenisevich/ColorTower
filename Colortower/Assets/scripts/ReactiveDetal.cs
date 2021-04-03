@@ -18,7 +18,7 @@ public class ReactiveDetal : MonoBehaviour
 
     private int _id;
 
-    private float sens = 3f;
+    private float sens = 2f;
     // Start is called before the first frame update
     void Start()
     {

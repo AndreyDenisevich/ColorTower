@@ -247,6 +247,14 @@ MonoBehaviour:
     type: 3}
   TowerPrefab: {fileID: 181641632817396182, guid: f92d56eb8ed28f241abf5a7e6246acdc,
     type: 3}
+  krishkaUp: {fileID: 4143727760589030558, guid: e357d51c007741a4bb2333cc2ef2a520,
+    type: 3}
+  krishkaDown: {fileID: 3756737665907776149, guid: 45c0ca746be7a364386dbaff0f7227a9,
+    type: 3}
+  RotationControllerDown: {fileID: 901383896055732605, guid: 9c0a20d45dd93be47b46166f842ae8f0,
+    type: 3}
+  RotationControllerUp: {fileID: 245143692468828764, guid: 6d5f762f4c2cc3e43897aa5b78648142,
+    type: 3}
   checkers:
   - {fileID: 6262724319684167126}
   - {fileID: 6262724320098012147}

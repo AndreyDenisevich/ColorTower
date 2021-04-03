@@ -11,15 +11,34 @@ public class GameController : MonoBehaviour
 
     private Transform Tower;
     [SerializeField] private GameObject TowerPrefab;
+    [SerializeField] private GameObject krishkaUp;
+    [SerializeField] private GameObject krishkaDown;
+    [SerializeField] private GameObject RotationControllerDown;
+    [SerializeField] private GameObject RotationControllerUp;
 
     [SerializeField] private Transform[] checkers;
     private int cols = 8;
     private int rows = 7;
+    private float scaler;
     void initializeGame()
-    {
+    { 
+        float deltaPos = (rows / 2) * 0.6f;
         GameObject tow = Instantiate(TowerPrefab) as GameObject;
         tow.transform.position = transform.position;
         Tower = tow.transform;
+        tow.transform.localScale = new Vector3(tow.transform.localScale.x, tow.transform.localScale.y*scaler, tow.transform.localScale.x);
+        GameObject krishka = Instantiate(krishkaUp) as GameObject;
+        krishka.transform.position = new Vector3(transform.position.x, transform.position.y + deltaPos+0.45f, transform.position.z);
+        krishka.transform.parent = Tower;
+        krishka = Instantiate(krishkaDown) as GameObject;
+        krishka.transform.position = new Vector3(transform.position.x, transform.position.y - deltaPos-0.45f, transform.position.z);
+        krishka.transform.parent = Tower;
+        GameObject rotationController = Instantiate(RotationControllerDown) as GameObject;
+        rotationController.transform.localScale = new Vector3(rotationController.transform.localScale.x, rotationController.transform.localScale.y / scaler, rotationController.transform.localScale.z);
+        rotationController.GetComponent<RotationController>().tower = Tower;
+        rotationController = Instantiate(RotationControllerUp) as GameObject;
+        rotationController.transform.localScale = new Vector3(rotationController.transform.localScale.x, rotationController.transform.localScale.y / scaler, rotationController.transform.localScale.z);
+        rotationController.GetComponent<RotationController>().tower = Tower;
         //int[] counts = { 6,7, 7, 7, 7, 7, 7, 7, 1 };
         int[] counts = new int[cols + 1];
         counts[cols] = 1;
@@ -28,7 +47,7 @@ public class GameController : MonoBehaviour
         {
             counts[i] = rows;
         }
-        float deltaPos = (rows / 2) * 0.6f;
+       
         float deltaAngle = 360 / cols;
         for (int i = 0; i < rows; i++)
         {
@@ -59,6 +78,7 @@ public class GameController : MonoBehaviour
     {
         cols = col;
         rows = row;
+        scaler =(float)row / 7;
         initializeGame();
     }
     // Update is called once per frame
