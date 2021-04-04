@@ -14,6 +14,9 @@ public class UImanager : MonoBehaviour
 
     [SerializeField] private Animator panelModes;
     [SerializeField] private Animator btn_start;
+    [SerializeField] private Animator btn_settings;
+    [SerializeField] private Animator btn_shop;
+    [SerializeField] private Animator btn_no_ads;
 
     [SerializeField] private Animator panelHelp;
     [SerializeField] private Animator btnHelp;
@@ -34,6 +37,9 @@ public class UImanager : MonoBehaviour
         bool isHidden = panelModes.GetBool("isHidden");
         panelModes.SetBool("isHidden", !isHidden);
         btn_start.SetBool("isHidden", isHidden);
+        btn_settings.SetBool("isHidden", isHidden);
+        btn_no_ads.SetBool("isHidden", isHidden);
+        btn_shop.SetBool("isHidden", isHidden);
     }
     public void TogglePanelHelp()
     {
