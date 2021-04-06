@@ -18,7 +18,7 @@ public class ReactiveDetal : MonoBehaviour
 
     private int _id;
 
-    private float sens = 2f;
+    private float sens = -3f;
     // Start is called before the first frame update
     void Start()
     {
@@ -66,7 +66,7 @@ public class ReactiveDetal : MonoBehaviour
             Vector2 delta = Input.GetTouch(0).deltaPosition;
             float deltatime = Input.GetTouch(0).deltaTime;
             if (delta.x > 2 || delta.x < -2)
-                allLine.transform.Rotate(0, -sens * delta.x * deltatime, 0);
+                allLine.transform.Rotate(0, sens * delta.x * deltatime, 0);
         }
     }
     private void OnMouseUp()

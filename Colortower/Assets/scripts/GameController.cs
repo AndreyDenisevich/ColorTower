@@ -16,13 +16,17 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject RotationControllerDown;
     [SerializeField] private GameObject RotationControllerUp;
 
-    [SerializeField] private Transform[] checkers;
+    [SerializeField] private Transform checker;
+
+    private UImanager uiMan;
+
     private int cols = 8;
     private int rows = 7;
     private float scaler;
+    private float deltaPos;
     void initializeGame()
     { 
-        float deltaPos = (rows / 2) * 0.6f;
+        deltaPos = (rows / 2) * 0.6f;
         GameObject tow = Instantiate(TowerPrefab) as GameObject;
         tow.transform.position = transform.position;
         Tower = tow.transform;
@@ -74,8 +78,9 @@ public class GameController : MonoBehaviour
             }
         }
     }
-    public void SetGame(int col,int row)
+    public void SetGame(int col,int row,UImanager ui)
     {
+        uiMan = ui;
         cols = col;
         rows = row;
         scaler =(float)row / 7;
@@ -84,34 +89,36 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     public void CheckForWin()
     {
-        int id = 0, prevId;
+        int id = -1, prevId;
         bool line = true,win = false;
-        for (int i = 0; i < checkers.Length; i++)
+        for (int i = 0; i < cols; i++)
         {
+            Vector3 pos = checker.position;
+            pos.y -= deltaPos;
             for (int j = 0; j < rows; j++)
             {
                 prevId = id;
-                Vector3 pos = checkers[i].position;
-                pos.y += j * 0.6f;
                 Collider[] cols = Physics.OverlapSphere(pos, 0.05f);
                 if (cols.Length == 0)
                 {
-                    id = 0;
+                    id = -1;
                 }
                 else
                 { id = cols[0].GetComponent<ReactiveDetal>().id; }
-                if (prevId == 0 || id == 0 || id == prevId)
+                if (prevId == -1 || id == -1 || id == prevId)
                     line = true;
                 else { line = false; break; }
+                pos.y += 0.6f;
             }
             if (!line)
             { win = false; break; }
             else win = true;
-            id = 0;
+            transform.Rotate(0, 45, 0);
+            id = -1;
         }
         if(win)
         {
-            Debug.Log("you win!");
+            uiMan.Win();
         }
     } 
 }

@@ -19,6 +19,7 @@ public class UImanager : MonoBehaviour
     [SerializeField] private Animator btn_no_ads;
 
     [SerializeField] private Animator panelHelp;
+    [SerializeField] private Animator panelWin;
     [SerializeField] private Animator btnHelp;
     [SerializeField] private Animator btnGoToMenu;
     void Start()
@@ -55,7 +56,7 @@ public class UImanager : MonoBehaviour
         obj.transform.position = Vector3.zero;
         Menu.enabled = false;
         InGameUI.enabled = true;
-        obj.GetComponent<GameController>().SetGame(8, 7);
+        obj.GetComponent<GameController>().SetGame(8, 7,this);
     }
     public void StartGame5x8()
     {
@@ -63,7 +64,7 @@ public class UImanager : MonoBehaviour
         obj.transform.position = Vector3.zero;
         Menu.enabled = false;
         InGameUI.enabled = true;
-        obj.GetComponent<GameController>().SetGame(8, 5);
+        obj.GetComponent<GameController>().SetGame(8, 5,this);
     }
     public void StartGame3x8()
     {
@@ -71,10 +72,16 @@ public class UImanager : MonoBehaviour
         obj.transform.position = Vector3.zero;
         Menu.enabled = false;
         InGameUI.enabled = true;
-        obj.GetComponent<GameController>().SetGame(8, 3);
+        obj.GetComponent<GameController>().SetGame(8, 3,this);
     }
     public void GoToMenu()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void Win()
+    {
+        panelWin.enabled = true;
+        btnHelp.SetBool("isHidden", true);
+        btnGoToMenu.SetBool("isHidden", true);
     }
 }

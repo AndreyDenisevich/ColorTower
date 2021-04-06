@@ -57,5 +57,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a8e60dde1ef89940b99007e3874811a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tower: {fileID: 0}
-  sens: 3
+  sens: -3
