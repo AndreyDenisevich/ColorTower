@@ -15,6 +15,8 @@ public class ReactiveDetal : MonoBehaviour
     private bool inAnimation = false;
     private bool canMoveUp = false;
     private bool canMoveDown = false;
+    private float deltaAngle;
+    private float deltaPos;
 
     private int _id;
 
@@ -32,11 +34,13 @@ public class ReactiveDetal : MonoBehaviour
             inAnimation = value;
         }
     }
-    public void setId(int id, Material mat,GameController game)
+    public void setId(int id, Material mat,GameController game,float deltaAngl,float dPos)
     {
         _id = id;
         GetComponent<MeshRenderer>().material = mat;
         gameController = game;
+        deltaAngle = deltaAngl;
+        deltaPos = dPos;
     }
     // Update is called once per frame
     void Update()
@@ -45,13 +49,16 @@ public class ReactiveDetal : MonoBehaviour
     }
     private void OnMouseDown()
     {
+        Vector3 pos = transform.position;
         if (!inAnimation)
         {
-            if (!Physics.Linecast(transform.position, checkerUpTransform.position))
+            pos.y += 0.6f;
+            if (!Physics.Linecast(pos, checkerUpTransform.position)&&pos.y<=deltaPos)
             {
                 canMoveUp = true;
             }
-            if (!Physics.Linecast(transform.position, checkerDownTransform.position))
+            pos.y -= 1.2f;
+            if (!Physics.Linecast(pos, checkerDownTransform.position)&&pos.y>=-deltaPos)
             {
                 canMoveDown = true;
             }
@@ -75,14 +82,14 @@ public class ReactiveDetal : MonoBehaviour
         {
             if (!canMoveUp && !canMoveDown)
             {
-                float rotation = Mathf.RoundToInt(allLine.transform.rotation.eulerAngles.y / 45f) * 45f;
+                float rotation = Mathf.RoundToInt(allLine.transform.rotation.eulerAngles.y / deltaAngle) * deltaAngle;
                 StartCoroutine(RotateAnim(rotation - allLine.transform.eulerAngles.y));
             }
             if (canMoveUp)
             {
                 canMoveUp = canMoveDown = false;
                 ChastController chast = allLine.GetUpperParent().GetComponent<ChastController>();
-                if (!chast.inAnim)
+                if (!inAnimation&&!chast.inAnim)
                 {
                     StartCoroutine(Move(0.6f));
                     transform.parent = chast.transform;
@@ -93,7 +100,7 @@ public class ReactiveDetal : MonoBehaviour
             {
                 canMoveUp = canMoveDown = false;
                 ChastController chast = allLine.GetLowerParent().GetComponent<ChastController>();
-                if (!chast.inAnim)
+                if (!inAnimation&& !chast.inAnim)
                 {
                     StartCoroutine(Move(-0.6f));
                     transform.parent = chast.transform;
@@ -124,8 +131,8 @@ public class ReactiveDetal : MonoBehaviour
 
     private IEnumerator RotateAnim(float deltaAngle)
     {
-        inAnimation = true;
-        Component[] compnts = transform.GetComponentsInChildren<ReactiveDetal>();
+        allLine.inAnim = true;
+        Component[] compnts = allLine.transform.GetComponentsInChildren<ReactiveDetal>();
         foreach (ReactiveDetal piece in compnts)
         {
             piece.inAnim = true;
@@ -150,7 +157,7 @@ public class ReactiveDetal : MonoBehaviour
         {
             piece.inAnim = false;
         }
-        inAnimation = false;
+        allLine.inAnim = false;
         gameController.CheckForWin();
     }
 }

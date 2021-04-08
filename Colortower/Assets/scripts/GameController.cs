@@ -7,7 +7,13 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] private Material[] pieceMaterials;
     [SerializeField] private ChastController chastPrefab;
-    [SerializeField] private ReactiveDetal piecePrefab;
+
+    [SerializeField] private ReactiveDetal pieceXx8;
+    [SerializeField] private ReactiveDetal pieceXx3;
+    [SerializeField] private ReactiveDetal pieceXx4;
+    [SerializeField] private ReactiveDetal pieceXx5;
+    [SerializeField] private ReactiveDetal pieceXx6;
+    [SerializeField] private ReactiveDetal pieceXx7;
 
     private Transform Tower;
     [SerializeField] private GameObject TowerPrefab;
@@ -24,9 +30,13 @@ public class GameController : MonoBehaviour
     private int rows = 7;
     private float scaler;
     private float deltaPos;
+    private float deltaAngle;
+    private ReactiveDetal piecePrefab;
     void initializeGame()
     { 
         deltaPos = (rows / 2) * 0.6f;
+        if (rows % 2 == 0)
+            deltaPos -= 0.3f;
         GameObject tow = Instantiate(TowerPrefab) as GameObject;
         tow.transform.position = transform.position;
         Tower = tow.transform;
@@ -40,9 +50,11 @@ public class GameController : MonoBehaviour
         GameObject rotationController = Instantiate(RotationControllerDown) as GameObject;
         rotationController.transform.localScale = new Vector3(rotationController.transform.localScale.x, rotationController.transform.localScale.y / scaler, rotationController.transform.localScale.z);
         rotationController.GetComponent<RotationController>().tower = Tower;
+        rotationController.GetComponent<RotationController>().angle = deltaAngle;
         rotationController = Instantiate(RotationControllerUp) as GameObject;
         rotationController.transform.localScale = new Vector3(rotationController.transform.localScale.x, rotationController.transform.localScale.y / scaler, rotationController.transform.localScale.z);
         rotationController.GetComponent<RotationController>().tower = Tower;
+        rotationController.GetComponent<RotationController>().angle = deltaAngle;
         //int[] counts = { 6,7, 7, 7, 7, 7, 7, 7, 1 };
         int[] counts = new int[cols + 1];
         counts[cols] = 1;
@@ -51,8 +63,6 @@ public class GameController : MonoBehaviour
         {
             counts[i] = rows;
         }
-       
-        float deltaAngle = 360 / cols;
         for (int i = 0; i < rows; i++)
         {
             GameObject chast = Instantiate(chastPrefab.gameObject) as GameObject;
@@ -71,9 +81,9 @@ public class GameController : MonoBehaviour
                 {
                     GameObject piece = Instantiate(piecePrefab.gameObject) as GameObject;
                     piece.transform.position = chast.transform.position;
-                    piece.transform.Rotate(deltaAngle * j, 0, 0);
+                    piece.transform.Rotate( 0,0, deltaAngle*j);
                     piece.transform.parent = chast.transform;
-                    piece.GetComponent<ReactiveDetal>().setId(id, pieceMaterials[id],this);
+                    piece.GetComponent<ReactiveDetal>().setId(id, pieceMaterials[id],this,deltaAngle,deltaPos);
                 }
             }
         }
@@ -84,6 +94,15 @@ public class GameController : MonoBehaviour
         cols = col;
         rows = row;
         scaler =(float)row / 7;
+        switch(cols)
+        {
+            case 3:deltaAngle = 120f;piecePrefab = pieceXx3; break;
+            case 4:deltaAngle = 90f;piecePrefab = pieceXx4;break;
+            case 5:deltaAngle = 72f;piecePrefab = pieceXx5;break;
+            case 6:deltaAngle = 60f;piecePrefab = pieceXx6;break;
+            case 7:deltaAngle = 360f/7f;piecePrefab = pieceXx7;break;
+            case 8:deltaAngle = 45f;piecePrefab = pieceXx8; break;
+        }
         initializeGame();
     }
     // Update is called once per frame
@@ -113,7 +132,7 @@ public class GameController : MonoBehaviour
             if (!line)
             { win = false; break; }
             else win = true;
-            transform.Rotate(0, 45, 0);
+            transform.Rotate(0, deltaAngle, 0);
             id = -1;
         }
         if(win)

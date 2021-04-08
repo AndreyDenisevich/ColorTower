@@ -9,11 +9,13 @@ public class RotationController : MonoBehaviour
     [SerializeField] private float sens=1f;
     private bool inAnimation=false;
     private float duration = 0.2f;
+    private float deltaAngle;
     void Start()
     {
         
     }
     public Transform tower { set { Tower = value; } }
+    public float angle { set { deltaAngle = value; } }
     // Update is called once per frame
     void Update()
     {
@@ -33,7 +35,7 @@ public class RotationController : MonoBehaviour
     {
         if (!inAnimation)
         {
-            float rotation = Mathf.RoundToInt(Tower.rotation.eulerAngles.y / 45f) * 45f;
+            float rotation = Mathf.RoundToInt(Tower.rotation.eulerAngles.y / deltaAngle) * deltaAngle;
             StartCoroutine(RotateAnim(rotation-Tower.rotation.eulerAngles.y));
         }
     }

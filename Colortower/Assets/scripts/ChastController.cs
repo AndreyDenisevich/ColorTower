@@ -29,6 +29,7 @@ public class ChastController : MonoBehaviour
     public bool inAnim
     {
         get { return inAnimation; }
+        set { inAnimation = value; }
     }
 }
 
