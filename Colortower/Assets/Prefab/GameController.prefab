@@ -59,8 +59,7 @@ MonoBehaviour:
     type: 3}
   pieceXx3: {fileID: 2921850949053155047, guid: 3a6df474b18b84f4c80fa82bfe79295f,
     type: 3}
-  pieceXx4: {fileID: 7130344934267192400, guid: 43b0bf2a5889bd84e978923006652ae1,
-    type: 3}
+  pieceXx4: {fileID: 177295260390725582, guid: 399b72558f35a4845967f0aedc8b86cc, type: 3}
   pieceXx5: {fileID: 4623613156036354081, guid: fa73bc8b2055fc0488eef4c3ef3cfcb0,
     type: 3}
   pieceXx6: {fileID: 1222816000386212047, guid: f834a281586604c4c83990a48151bf29,
@@ -73,9 +72,7 @@ MonoBehaviour:
     type: 3}
   krishkaDown: {fileID: 3756737665907776149, guid: 45c0ca746be7a364386dbaff0f7227a9,
     type: 3}
-  RotationControllerDown: {fileID: 901383896055732605, guid: 9c0a20d45dd93be47b46166f842ae8f0,
-    type: 3}
-  RotationControllerUp: {fileID: 245143692468828764, guid: 6d5f762f4c2cc3e43897aa5b78648142,
+  RotationController: {fileID: 901383896055732605, guid: 9c0a20d45dd93be47b46166f842ae8f0,
     type: 3}
   checker: {fileID: 6262724319684167126}
 --- !u!1 &6262724319684167127

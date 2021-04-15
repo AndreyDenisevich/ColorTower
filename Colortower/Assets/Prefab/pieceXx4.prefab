@@ -143,6 +143,11 @@ MonoBehaviour:
   duration: 0.2
   checkerUpTransform: {fileID: 6821263239844602192}
   checkerDownTransform: {fileID: 4487096181490764083}
+  pieceMask:
+    serializedVersion: 2
+    m_Bits: 64
+  gameController: {fileID: 0}
+  _id: 0
 --- !u!1 &8311586100400686876
 GameObject:
   m_ObjectHideFlags: 0

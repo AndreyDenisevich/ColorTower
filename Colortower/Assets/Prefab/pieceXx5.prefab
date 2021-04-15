@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3218509190729903695}
   - component: {fileID: 4623613156036354081}
   - component: {fileID: 6734783559899267604}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pieceXx5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,6 +100,9 @@ MonoBehaviour:
   duration: 0.2
   checkerUpTransform: {fileID: 3885778385793036035}
   checkerDownTransform: {fileID: 1832728262215260954}
+  pieceMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!65 &6734783559899267604
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -122,7 +125,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3885778385793036035}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: checkerUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +155,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1832728262215260954}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: checkerDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}

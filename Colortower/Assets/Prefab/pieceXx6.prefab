@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7784398601644834344}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: checkerDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 506533052175081210}
   - component: {fileID: 3748134200505753130}
   - component: {fileID: 1222816000386212047}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pieceXx6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,6 +143,9 @@ MonoBehaviour:
   duration: 0.15
   checkerUpTransform: {fileID: 3016341903842485716}
   checkerDownTransform: {fileID: 7784398601644834344}
+  pieceMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2153916164128226323
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +155,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3016341903842485716}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: checkerUP
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -19,8 +19,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject TowerPrefab;
     [SerializeField] private GameObject krishkaUp;
     [SerializeField] private GameObject krishkaDown;
-    [SerializeField] private GameObject RotationControllerDown;
-    [SerializeField] private GameObject RotationControllerUp;
+    [SerializeField] private GameObject RotationController;
 
     [SerializeField] private Transform checker;
 
@@ -47,11 +46,7 @@ public class GameController : MonoBehaviour
         krishka = Instantiate(krishkaDown) as GameObject;
         krishka.transform.position = new Vector3(transform.position.x, transform.position.y - deltaPos-0.45f, transform.position.z);
         krishka.transform.parent = Tower;
-        GameObject rotationController = Instantiate(RotationControllerDown) as GameObject;
-        rotationController.transform.localScale = new Vector3(rotationController.transform.localScale.x, rotationController.transform.localScale.y / scaler, rotationController.transform.localScale.z);
-        rotationController.GetComponent<RotationController>().tower = Tower;
-        rotationController.GetComponent<RotationController>().angle = deltaAngle;
-        rotationController = Instantiate(RotationControllerUp) as GameObject;
+        GameObject rotationController = Instantiate(RotationController) as GameObject;
         rotationController.transform.localScale = new Vector3(rotationController.transform.localScale.x, rotationController.transform.localScale.y / scaler, rotationController.transform.localScale.z);
         rotationController.GetComponent<RotationController>().tower = Tower;
         rotationController.GetComponent<RotationController>().angle = deltaAngle;

@@ -8,6 +8,7 @@ public class ReactiveDetal : MonoBehaviour
 
     [SerializeField] private Transform checkerUpTransform;
     [SerializeField] private Transform checkerDownTransform;
+    [SerializeField] private LayerMask pieceMask;
 
     private ChastController allLine;
     private GameController gameController;
@@ -53,12 +54,12 @@ public class ReactiveDetal : MonoBehaviour
         if (!inAnimation)
         {
             pos.y += 0.6f;
-            if (!Physics.Linecast(pos, checkerUpTransform.position)&&pos.y<=deltaPos)
+            if (!Physics.Linecast(pos, checkerUpTransform.position,pieceMask) && pos.y <= (deltaPos+0.1f))
             {
                 canMoveUp = true;
             }
             pos.y -= 1.2f;
-            if (!Physics.Linecast(pos, checkerDownTransform.position)&&pos.y>=-deltaPos)
+            if (!Physics.Linecast(pos, checkerDownTransform.position,pieceMask) &&pos.y>=-(deltaPos+0.1f))
             {
                 canMoveDown = true;
             }

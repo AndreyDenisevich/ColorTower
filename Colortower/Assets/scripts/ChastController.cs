@@ -8,6 +8,7 @@ public class ChastController : MonoBehaviour
     private bool inAnimation = false;
     [SerializeField] private Transform CheckerUpperParent;
     [SerializeField] private Transform CheckerLowerParent;
+    [SerializeField] private LayerMask chastLayer;
     void Start()
     {
 
@@ -20,11 +21,11 @@ public class ChastController : MonoBehaviour
     }
     public Transform GetUpperParent()
     {
-        return Physics.OverlapSphere(CheckerUpperParent.position, 0.2f)[0].GetComponent<Transform>();
+        return Physics.OverlapSphere(CheckerUpperParent.position, 0.2f,chastLayer)[0].GetComponent<Transform>();
     }
     public Transform GetLowerParent()
     {
-        return Physics.OverlapSphere(CheckerLowerParent.position, 0.2f)[0].GetComponent<Transform>();
+        return Physics.OverlapSphere(CheckerLowerParent.position, 0.2f,chastLayer)[0].GetComponent<Transform>();
     }
     public bool inAnim
     {
